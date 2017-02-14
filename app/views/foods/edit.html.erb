@@ -1,0 +1,8 @@
+<%= form_tag "/foods/#{@food['id']}", method: :patch do %>
+  <p>First Ingredient: <input type="text" name="ingredient1"> </p>
+  <p>Second Ingredient: <input type="text" name="ingredient2"> </p>
+  <p>First spice: <input type="text" name="spice1"> </p>
+  <p>Second spice: <input type="text" name="spice2"> </p>
+
+  <input type="submit" value="update this food.">
+<% end %>
