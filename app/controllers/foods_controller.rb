@@ -1,12 +1,12 @@
 class FoodsController < ApplicationController
-
+  
   def index
-    @foods = Unirest.get("http://localhost:3000/api/v2/foods").body
+    @foods = Food.all 
     render "index.html.erb"
   end
 
   def show
-    @food = Unirest.get("http://localhost:3000/api/v2/foods/#{params[:id]}").body
+    @food = Food.find_by(id: params[:id])
     render "show.html.erb"   
   end
 
@@ -15,36 +15,27 @@ class FoodsController < ApplicationController
   end
 
   def create
-    food = Unirest.post("http://localhost:3000/api/v2/foods",
-                        headers:{"Accept" => "application/json"},
-                        parameters:{ingredient1: params[:ingredient1],
+    @food = Food.create(ingredient1: params[:ingredient1],
                                     ingredient2: params[:ingredient2],
                                     spice1: params[:spice1],
-                                    spice2: params[:spice2]}
-                        ).body
-    redirect_to "/foods/#{food['id']}"
+                                    spice2: params[:spice2])
+    redirect_to "/foods/#{@food.id}"
   end
 
   def edit
-    @food = Unirest.get("http://localhost:3000/api/v2/foods/#{params[:id]}").body
-    render "edit.html.erb"
+    @food = Food.find_by(id: params[:id])
+    render :edit # same as "edit.html.erb"
   end
 
   def update
-    food = Unirest.patch("http://localhost:3000/api/v2/foods/#{params[:id]}",
-                          headers:{"Accept" => "application/json" },
-                          parameters:{ingredient1: params[:ingredient1],
-                                    ingredient2: params[:ingredient2],
-                                    spice1: params[:spice1],
-                                    spice2: params[:spice2]}
-                          ).body 
-    redirect_to "/foods/#{food['id']}"  
+    @food = Food.find_by(id: params[:id])
+    @food.update(ingredient1: params[:ingredient1], ingredient2: params[:ingredient2], spice1: params[:spice1], spice2: params[:spice2])
+    redirect_to "/foods/#{@food.id}"  
   end
 
   def destroy
-    Unirest.delete("http://localhost:3000/api/v2/foods/#{params[:id]}", 
-                    headers:{"Accept" => "application/json"}
-                  ).body
+    food = Food.find_by(id: params[:id])
+    food.destroy
     redirect_to "/foods"
   end
 

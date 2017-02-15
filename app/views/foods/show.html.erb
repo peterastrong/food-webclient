@@ -1,8 +1,10 @@
 <h1>A food:</h1>
 
-<p><%= @food["first_ingredient"] %></p>
-<p><%= @food["second_ingredient"] %></p>
-<p><%= @food["first_spice"] %></p>
-<p><%= @food["second_spice"] %></p>
+<p><%= @food.first_ingredient %></p>
+<p><%= @food.second_ingredient %></p>
+<p><%= @food.first_spice %></p>
+<p><%= @food.first_spice_amount %></p>
+<p><%= @food.second_spice %></p>
+<p><%= @food.second_spice_amount %></p>
 
-<%= link_to "Delete this food", "/foods/#{@food['id']}", method: :delete %>
+<%= link_to "Delete this food", "/foods/#{@food.id}", method: :delete %>
